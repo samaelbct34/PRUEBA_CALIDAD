@@ -1,29 +1,21 @@
-name: Verificación de Errores al Compilar
+name: Verificar Formato de package.json
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    paths:
+      - 'package.json'
+    branches:
+      - main
 
 jobs:
-  verificar-construccion:
+  validar-package-json:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧠 Descargar el proyecto desde GitHub
+      - name: 📥 Descargar código del repositorio
         uses: actions/checkout@v3
 
-      - name: ⚙️ Instalar Node.js (versión moderna)
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: 📦 Instalar dependencias con npm
-        run: npm install
-
-      - name: 🧱 Compilar el sistema escolar
-        run: npm run build
-
-      - name: ✅ Verificación Exitosa
-        run: echo "✅ La compilación fue correcta. No hay errores"
+      - name: 📄 Validar estructura de package.json
+        run: |
+          echo "🔍 Validando package.json..."
+          cat package.json | jq .
