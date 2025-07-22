@@ -1,0 +1,29 @@
+name: Verificación de Errores al Compilar
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verificar-construccion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧠 Traer tu proyecto desde GitHub
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Instalar dependencias (npm install)
+        run: npm install
+
+      - name: 🧱 Compilar proyecto (npm run build)
+        run: npm run build
+
+      - name: ✅ Verificación Exitosa
+        run: echo "✅ El sistema se compiló sin errores"
